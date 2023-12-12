@@ -32,37 +32,51 @@ class _PostsViewState extends State<PostsView> {
         listener: (context, state) {},
         builder: (context, state) {
           switch (state.runtimeType) {
+            case PostsFetchingLoadingState:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+
             case PostFetchingSuccessfulState:
               final successState = state as PostFetchingSuccessfulState;
 
-              return Container(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const Divider(
-                    color: Colors.transparent,
-                  ),
-                  itemCount: successState.posts.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 11),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(28.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                successState.posts[index].title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 19),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(successState.posts[index].body),
-                            ],
-                          ),
+              return ListView.separated(
+                separatorBuilder: (context, index) => const Divider(
+                  color: Colors.transparent,
+                ),
+                itemCount: successState.posts.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 11),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(28.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              successState.posts[index].title,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 19),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(successState.posts[index].body),
+                          ],
                         ),
                       ),
-                    );
-                  },
+                    ),
+                  );
+                },
+              );
+            case PostsFetchingErrorState:
+              return const Center(
+                child: Text(
+                  '404 - Not Found ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                    fontSize: 22,
+                  ),
                 ),
               );
             default:

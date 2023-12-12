@@ -19,6 +19,8 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
 
   FutureOr<void> postInitialFetchEvent(
       PostInitialFetchEvent event, Emitter<PostsState> emit) async {
+    emit(PostsFetchingLoadingState());
+
     var client = http.Client();
     List<PostDataUiModel> posts = [];
     try {
@@ -36,6 +38,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       log('Posts : $posts');
       emit(PostFetchingSuccessfulState(posts: posts));
     } catch (e) {
+      emit(PostsFetchingErrorState());
       log('$e');
     }
   }
