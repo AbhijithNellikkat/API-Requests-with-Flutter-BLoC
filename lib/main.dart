@@ -1,4 +1,7 @@
+import 'package:apis_with_bloc/features/home/home_view.dart';
 import 'package:flutter/material.dart';
+
+import 'features/posts/ui/posts_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +18,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: const Scaffold(),
+      debugShowCheckedModeBanner: false,
+      home: const PostsView(),
     );
   }
 }
